@@ -1,0 +1,36 @@
+version: '3'
+services:
+  verizon-nginx: 
+    image: verizon-nginx:latest
+    networks:
+        - load-balancer
+    depends_on:
+        - verizon-springboot-1
+        - verizon-springboot-2
+        - verizon-springboot-3
+    ports:
+        - 80:80
+    links:
+        - verizon-springboot-1
+        - verizon-springboot-2
+        - verizon-springboot-3
+  verizon-springboot-1:
+    image: verizon-springboot-1:latest
+    networks:
+        - load-balancer
+    ports:
+        - "8083:8083"
+  verizon-springboot-2:
+    image: verizon-springboot-2:latest
+    networks:
+        - load-balancer
+    ports:
+        - "8084:8084"
+  verizon-springboot-3:
+    image: verizon-springboot-3:latest
+    networks:
+        - load-balancer
+    ports:
+        - "8085:8085"
+networks:
+    load-balancer:
